@@ -12,6 +12,7 @@ func FizzBuzz() FizzBuzzLines {
 	lines := make(FizzBuzzLines, 100)
 	for i := range lines {
 		lines[i] = strconv.Itoa(i + 1)
+
 		if (i+1)%3 == 0 {
 			lines[i] = "Fizz"
 		}
