@@ -10,6 +10,7 @@ func (l FizzBuzzLines) Line(num int64) string {
 
 func FizzBuzz() FizzBuzzLines {
 	lines := make(FizzBuzzLines, 100)
+
 	for i := range lines {
 		lines[i] = strconv.Itoa(i + 1)
 
