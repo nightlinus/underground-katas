@@ -23,5 +23,7 @@ func Test_FizzBuzz_each_line_prints_its_number(t *testing.T) {
 func Test_line_number_devisable_by_3_print_Fizz(t *testing.T) {
 	lines := fizzbuzz.FizzBuzz()
 
-	assert.Equal(t, lines[99], "Fizz")
+	assert.Equal(t, lines[2], "Fizz")
+	assert.Equal(t, lines[5], "Fizz")
+	assert.Equal(t, lines[98], "Fizz")
 }
