@@ -1,5 +1,5 @@
 package fizzbuzz
 
 func FizzBuzz() []string {
-	return nil
+	return make([]string, 100)
 }
