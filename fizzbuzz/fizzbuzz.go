@@ -1,6 +1,9 @@
 package fizzbuzz
 
-import "strconv"
+import (
+	"strconv"
+	"strings"
+)
 
 type FizzBuzzLines []string
 
@@ -12,8 +15,7 @@ func FizzBuzz() FizzBuzzLines {
 	lines := make(FizzBuzzLines, 100)
 
 	for i := range lines {
-		lines[i] = strconv.Itoa(i + 1)
-
+		strValue := strconv.Itoa(i + 1)
 		if (i+1)%3 == 0 {
 			lines[i] = "Fizz"
 		}
@@ -24,6 +26,14 @@ func FizzBuzz() FizzBuzzLines {
 
 		if (i+1)%3 == 0 && (i+1)%5 == 0 {
 			lines[i] = "FizzBuzz"
+		}
+
+		if strings.Contains(strValue, "3") {
+			lines[i] = lines[i] + "Fizz"
+		}
+
+		if lines[i] == "" {
+			lines[i] = strValue
 		}
 	}
 

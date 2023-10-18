@@ -23,7 +23,6 @@ func Test_FizzBuzz_each_line_prints_its_number(t *testing.T) {
 func Test_line_number_devisable_by_3_print_Fizz(t *testing.T) {
 	lines := fizzbuzz.FizzBuzz()
 
-	assert.Equal(t, "Fizz", lines.Line(3))
 	assert.Equal(t, "Fizz", lines.Line(6))
 	assert.Equal(t, "Fizz", lines.Line(99))
 }
@@ -43,4 +42,17 @@ func Test_line_number_devisable_by_5_and_3_print_FizzBuzz(t *testing.T) {
 	assert.Equal(t, "FizzBuzz", lines.Line(45))
 	assert.Equal(t, "FizzBuzz", lines.Line(60))
 	assert.Equal(t, "FizzBuzz", lines.Line(90))
+}
+
+func Test_line_number_contains_3_print_Fizz(t *testing.T) {
+	lines := fizzbuzz.FizzBuzz()
+
+	assert.Equal(t, "Fizz", lines.Line(31))
+}
+
+func Test_line_number_divisable_by_3_and_contains_3_pring_FizzFizz(t *testing.T) {
+	lines := fizzbuzz.FizzBuzz()
+
+	assert.Equal(t, "FizzFizz", lines.Line(36))
+	assert.Equal(t, "FizzFizz", lines.Line(3))
 }
