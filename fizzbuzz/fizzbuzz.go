@@ -15,27 +15,30 @@ func FizzBuzz() FizzBuzzLines {
 	lines := make(FizzBuzzLines, 100)
 
 	for i := range lines {
-		strValue := strconv.Itoa(i + 1)
-		if (i+1)%3 == 0 {
-			lines[i] = "Fizz"
-		}
-
-		if (i+1)%5 == 0 {
-			lines[i] = "Buzz"
-		}
-
-		if (i+1)%3 == 0 && (i+1)%5 == 0 {
-			lines[i] = "FizzBuzz"
-		}
-
-		if strings.Contains(strValue, "3") {
-			lines[i] = lines[i] + "Fizz"
-		}
-
-		if lines[i] == "" {
-			lines[i] = strValue
-		}
+		lines[i] = lineToStr(i)
 	}
 
 	return lines
+}
+
+func lineToStr(i int) string {
+	strValue := strconv.Itoa(i + 1)
+	acc := ""
+	if (i+1)%3 == 0 {
+		acc += "Fizz"
+	}
+
+	if (i+1)%5 == 0 {
+		acc += "Buzz"
+	}
+
+	if strings.Contains(strValue, "3") {
+		acc += "Fizz"
+	}
+
+	if acc == "" {
+		return strValue
+	}
+
+	return acc
 }
