@@ -30,7 +30,6 @@ func Test_line_number_devisable_by_3_print_Fizz(t *testing.T) {
 func Test_line_number_devisable_by_5_print_Buzz(t *testing.T) {
 	lines := fizzbuzz.FizzBuzz()
 
-	assert.Equal(t, "Buzz", lines.Line(5))
 	assert.Equal(t, "Buzz", lines.Line(10))
 	assert.Equal(t, "Buzz", lines.Line(100))
 }
@@ -38,8 +37,6 @@ func Test_line_number_devisable_by_5_print_Buzz(t *testing.T) {
 func Test_line_number_devisable_by_5_and_3_print_FizzBuzz(t *testing.T) {
 	lines := fizzbuzz.FizzBuzz()
 
-	assert.Equal(t, "FizzBuzz", lines.Line(15))
-	assert.Equal(t, "FizzBuzz", lines.Line(45))
 	assert.Equal(t, "FizzBuzz", lines.Line(60))
 	assert.Equal(t, "FizzBuzz", lines.Line(90))
 }
@@ -50,9 +47,29 @@ func Test_line_number_contains_3_print_Fizz(t *testing.T) {
 	assert.Equal(t, "Fizz", lines.Line(31))
 }
 
-func Test_line_number_divisable_by_3_and_contains_3_pring_FizzFizz(t *testing.T) {
+func Test_line_number_divisable_by_3_and_contains_3_print_FizzFizz(t *testing.T) {
 	lines := fizzbuzz.FizzBuzz()
 
 	assert.Equal(t, "FizzFizz", lines.Line(36))
 	assert.Equal(t, "FizzFizz", lines.Line(3))
+}
+
+func Test_line_number_contains_5_print_Buzz(t *testing.T) {
+	lines := fizzbuzz.FizzBuzz()
+
+	assert.Equal(t, "Buzz", lines.Line(52))
+}
+
+func Test_line_number_divisable_by_5_and_contains_5_print_BuzzBuzz(t *testing.T) {
+	lines := fizzbuzz.FizzBuzz()
+
+	assert.Equal(t, "BuzzBuzz", lines.Line(5))
+	assert.Equal(t, "BuzzBuzz", lines.Line(25))
+}
+
+func Test_line_number_divisable_by_3_and_contains_5_print_FizzBuzz(t *testing.T) {
+	lines := fizzbuzz.FizzBuzz()
+
+	assert.Equal(t, "FizzBuzz", lines.Line(51))
+	assert.Equal(t, "FizzBuzz", lines.Line(54))
 }

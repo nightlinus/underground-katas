@@ -36,6 +36,10 @@ func lineToStr(i int) string {
 		acc += "Fizz"
 	}
 
+	if strings.Contains(strValue, "5") {
+		acc += "Buzz"
+	}
+
 	if acc == "" {
 		return strValue
 	}
