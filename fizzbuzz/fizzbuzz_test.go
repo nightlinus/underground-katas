@@ -73,3 +73,16 @@ func Test_line_number_divisable_by_3_and_contains_5_print_FizzBuzz(t *testing.T)
 	assert.Equal(t, "FizzBuzz", lines.Line(51))
 	assert.Equal(t, "FizzBuzz", lines.Line(54))
 }
+
+func Test_line_number_devisable_by_5_and_3_and_contains_5_print_FizzBuzzBuzz(t *testing.T) {
+	lines := fizzbuzz.FizzBuzz()
+
+	assert.Equal(t, "FizzBuzzBuzz", lines.Line(15))
+	assert.Equal(t, "FizzBuzzBuzz", lines.Line(45))
+}
+
+func Test_line_number_contains_3_and_5_and_divisable_by_5(t *testing.T) {
+	lines := fizzbuzz.FizzBuzz()
+
+	assert.Equal(t, "FizzBuzzBuzz", lines.Line(35))
+}

@@ -28,12 +28,12 @@ func lineToStr(i int) string {
 		acc += "Fizz"
 	}
 
-	if (i+1)%5 == 0 {
-		acc += "Buzz"
-	}
-
 	if strings.Contains(strValue, "3") {
 		acc += "Fizz"
+	}
+
+	if (i+1)%5 == 0 {
+		acc += "Buzz"
 	}
 
 	if strings.Contains(strValue, "5") {
