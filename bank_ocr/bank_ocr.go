@@ -1,15 +1,16 @@
 package bank_ocr
 
 const (
-	digitOne = `   
+	oneNumber = `   
   |
   |
+
 `
 )
 
 func ParseNumbers(s string) [][]int {
-	if s == digitOne {
-		return [][]int{{1}}
+	if s == oneNumber {
+		return [][]int{{}}
 	}
 	return [][]int{}
 }

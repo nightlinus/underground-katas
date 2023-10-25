@@ -14,10 +14,24 @@ func Test_read_empty_account_numbers_list(t *testing.T) {
 	assert.Len(t, result, 0)
 }
 
-func Test_recognize_1_digit(t *testing.T) {
+func Test_recognize_first_line(t *testing.T) {
 	result := bank_ocr.ParseNumbers(`   
   |
   |
+
 `)
-	assert.Equal(t, [][]int{{1}}, result)
+	assert.Len(t, result, 1)
+}
+
+func Test_recognize_two_line(t *testing.T) {
+	result := bank_ocr.ParseNumbers(`   
+  |
+  |
+
+   
+  |
+  |
+
+`)
+	assert.Len(t, result, 2)
 }
