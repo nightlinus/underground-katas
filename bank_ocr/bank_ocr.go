@@ -1,5 +1,7 @@
 package bank_ocr
 
+import "strings"
+
 const (
 	oneNumber = `   
   |
@@ -9,8 +11,8 @@ const (
 )
 
 func ParseNumbers(s string) [][]int {
-	if s == oneNumber {
-		return [][]int{{}}
-	}
-	return [][]int{}
+	i := strings.Count(s, oneNumber)
+	result := make([][]int, i)
+
+	return result
 }
