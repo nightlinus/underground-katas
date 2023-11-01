@@ -17,12 +17,7 @@ func ParseNumbers(s string) [][]int {
 	result := make([][]int, 0, entriesCount)
 
 	for _, entry := range entries {
-		if entry == oneNumberEntry {
-			result = append(result, []int{1, 1, 1, 1, 1, 1, 1, 1, 1})
-		}
-		if entry == twoNumberEntry {
-			result = append(result, []int{2, 2, 2, 2, 2, 2, 2, 2, 2})
-		}
+		result = append(result, parseLine(entry))
 	}
 
 	return result
@@ -31,4 +26,17 @@ func ParseNumbers(s string) [][]int {
 func ParseLines(s string) []string {
 	entries := strings.Split(s, "\n\n")
 	return entries[:len(entries)-1]
+}
+
+func parseLine(entry string) []int {
+	if entry == oneNumberEntry {
+		return []int{1, 1, 1, 1, 1, 1, 1, 1, 1}
+	}
+	if entry == twoNumberEntry {
+		return []int{2, 2, 2, 2, 2, 2, 2, 2, 2}
+	}
+
+	result := make([]int, 9)
+
+	return result
 }

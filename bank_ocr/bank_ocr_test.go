@@ -57,6 +57,17 @@ func Test_recognize_with_diff_lines(t *testing.T) {
 	assert.Len(t, result, 1)
 }
 
+func Test_parse_line_with_mixed_symbols(t *testing.T) {
+	lines :=
+		`   _  _  _  _  _  _  _  _ 
+  | _| _| _| _| _| _| _| _|
+  | |_ |_ |_ |_ |_ |_ |_ |_ 
+
+`
+	result := bank_ocr.ParseNumbers(lines)
+	assert.Len(t, result[0], 9)
+}
+
 func Test_recognize_full_line(t *testing.T) {
 	expected := genNResults(1)
 	result := bank_ocr.ParseNumbers(genNLines(1))
