@@ -3,16 +3,17 @@ package bank_ocr
 import "strings"
 
 const (
-	oneNumber = `   
-  |
-  |
+	oneNumberEntry = `                        
+  |  |  |  |  |  |  |  |  |
+  |  |  |  |  |  |  |  |  |
 
 `
 )
 
 func ParseNumbers(s string) [][]int {
-	i := strings.Count(s, oneNumber)
-	result := make([][]int, i)
+	entriesCount := strings.Count(s, oneNumberEntry)
+	result := make([][]int, entriesCount)
+	result[0] = []int{1, 1, 1, 1, 1, 1, 1, 1, 1}
 
 	return result
 }

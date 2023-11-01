@@ -37,3 +37,13 @@ func Test_recognize_500_line(t *testing.T) {
 	result := bank_ocr.ParseNumbers(genNLines(500))
 	assert.Len(t, result, 500)
 }
+
+func Test_recognize_full_line(t *testing.T) {
+	result := bank_ocr.ParseNumbers(`                        
+  |  |  |  |  |  |  |  |  |
+  |  |  |  |  |  |  |  |  |
+
+`)
+	assert.Equalf(t, [][]int{{1, 1, 1, 1, 1, 1, 1, 1, 1}}, result,
+		`ParseNumbers() want = %v, got = %v`, [][]int{{1, 1, 1, 1, 1, 1, 1, 1, 1}}, result)
+}
