@@ -77,9 +77,9 @@ func Test_recognize_diff_lines(t *testing.T) {
 	expected := [][]int{{2, 2, 2, 2, 2, 2, 2, 2, 2}}
 
 	result := bank_ocr.ParseNumbers(
-		`_  _  _  _  _  _  _  _  _
-_| _| _| _| _| _| _| _| _|
-|_ |_ |_ |_ |_ |_ |_ |_ |_
+		`_  _  _  _  _  _  _  _  _ 
+ _| _| _| _| _| _| _| _| _|
+|_ |_ |_ |_ |_ |_ |_ |_ |_ 
 
 `)
 
