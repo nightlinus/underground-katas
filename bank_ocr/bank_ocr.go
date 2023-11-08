@@ -3,15 +3,6 @@ package bank_ocr
 import "strings"
 
 const (
-	oneNumberEntry = `                           
-  |  |  |  |  |  |  |  |  |
-  |  |  |  |  |  |  |  |  |`
-	twoNumberEntry = `_  _  _  _  _  _  _  _  _ 
- _| _| _| _| _| _| _| _| _|
-|_ |_ |_ |_ |_ |_ |_ |_ |_ `
-	mixedNumbersEntry = `   _  _  _  _  _  _  _  _ 
- |  _| _| _| _| _| _| _| _|
- | |_ |_ |_ |_ |_ |_ |_ |_ `
 	numberOne = "" +
 		"   " +
 		"  |" +
@@ -24,7 +15,43 @@ const (
 		" _ " +
 		" _|" +
 		" _|"
+	numberFour = "" +
+		"   " +
+		"|_|" +
+		"  |"
+	numberFive = "" +
+		" _ " +
+		"|_ " +
+		" _|"
+	numberSix = "" +
+		" _ " +
+		"|_ " +
+		"|_|"
+	numberSeven = "" +
+		" _ " +
+		"  |" +
+		"  |"
+	numberEight = "" +
+		" _ " +
+		"|_|" +
+		"|_|"
+	numberNine = "" +
+		" _ " +
+		"|_|" +
+		" _|"
 )
+
+var numbers = map[string]int{
+	numberOne:   1,
+	numberTwo:   2,
+	numberThree: 3,
+	numberFour:  4,
+	numberFive:  5,
+	numberSix:   6,
+	numberSeven: 7,
+	numberEight: 8,
+	numberNine:  9,
+}
 
 func ParseNumbers(s string) [][]int {
 	entries := ParseLines(s)
@@ -45,21 +72,21 @@ func ParseLines(s string) []string {
 
 func parseLine(entry string) []int {
 	result := make([]int, 9)
+	digits := parseDigit(entry)
+	for i, digit := range digits {
+		result[i] = numbers[digit]
+	}
+	return result
+}
+func parseDigit(entry string) []string {
+	result := make([]string, 9)
 	entryLines := strings.Split(entry, "\n")
 	index := 0
 	for i := 0; i < 9; i++ {
-		number := entryLines[0][index:index+3] + entryLines[1][index:index+3] + entryLines[2][index:index+3]
-		if number == numberOne {
-			result[i] = 1
-		}
-
-		if number == numberTwo {
-			result[i] = 2
-		}
-		if number == numberThree {
-			result[i] = 3
-		}
+		numberStr := entryLines[0][index:index+3] + entryLines[1][index:index+3] + entryLines[2][index:index+3]
+		result[i] = numberStr
 		index += 3
 	}
 	return result
+
 }

@@ -111,7 +111,7 @@ func Test_parse_lines_with_1_and_2(t *testing.T) {
 		`ParseNumbers() want = %v, got = %v`, expected, result)
 }
 
-func Test_parse_lines_with_diff_numbers(t *testing.T) {
+func Test_parse_lines_with_1_2_3(t *testing.T) {
 	result := bank_ocr.ParseNumbers(
 		`    _  _  _  _  _  _  _  _ 
   | _| _| _| _| _| _| _| _|
@@ -120,6 +120,19 @@ func Test_parse_lines_with_diff_numbers(t *testing.T) {
 `)
 
 	expected := [][]int{{1, 2, 3, 2, 2, 2, 2, 2, 2}}
+	assert.Equalf(t, expected, result,
+		`ParseNumbers() want = %v, got = %v`, expected, result)
+}
+
+func Test_parse_lines_with_all_numbers(t *testing.T) {
+	result := bank_ocr.ParseNumbers(
+		`    _  _     _  _  _  _  _ 
+  | _| _||_||_ |_   ||_||_|
+  ||_  _|  | _||_|  ||_| _|
+
+`)
+
+	expected := [][]int{{1, 2, 3, 4, 5, 6, 7, 8, 9}}
 	assert.Equalf(t, expected, result,
 		`ParseNumbers() want = %v, got = %v`, expected, result)
 }
