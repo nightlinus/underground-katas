@@ -10,7 +10,7 @@ import (
 )
 
 func genNLines(n int) string {
-	return strings.Repeat(`                        
+	return strings.Repeat(`                           
   |  |  |  |  |  |  |  |  |
   |  |  |  |  |  |  |  |  |
 

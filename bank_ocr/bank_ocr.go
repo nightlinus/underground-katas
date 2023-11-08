@@ -3,12 +3,16 @@ package bank_ocr
 import "strings"
 
 const (
-	oneNumberEntry = `                        
+	oneNumberEntry = `                           
   |  |  |  |  |  |  |  |  |
   |  |  |  |  |  |  |  |  |`
 	twoNumberEntry = `_  _  _  _  _  _  _  _  _ 
  _| _| _| _| _| _| _| _| _|
 |_ |_ |_ |_ |_ |_ |_ |_ |_ `
+	mixedNumbersEntry = `   _  _  _  _  _  _  _  _ 
+ |  _| _| _| _| _| _| _| _|
+ | |_ |_ |_ |_ |_ |_ |_ |_ `
+	numberOne = "     |  |"
 )
 
 func ParseNumbers(s string) [][]int {
@@ -29,14 +33,15 @@ func ParseLines(s string) []string {
 }
 
 func parseLine(entry string) []int {
-	if entry == oneNumberEntry {
-		return []int{1, 1, 1, 1, 1, 1, 1, 1, 1}
-	}
-	if entry == twoNumberEntry {
-		return []int{2, 2, 2, 2, 2, 2, 2, 2, 2}
-	}
-
 	result := make([]int, 9)
-
+	entryLines := strings.Split(entry, "\n")
+	index := 0
+	for i := 0; i < 9; i++ {
+		number := entryLines[0][index:index+2] + entryLines[1][index:index+2] + entryLines[2][index:index+2]
+		if number == numberOne {
+			result[i] = 1
+		}
+		index += 3
+	}
 	return result
 }
