@@ -12,7 +12,18 @@ const (
 	mixedNumbersEntry = `   _  _  _  _  _  _  _  _ 
  |  _| _| _| _| _| _| _| _|
  | |_ |_ |_ |_ |_ |_ |_ |_ `
-	numberOne = "     |  |"
+	numberOne = "" +
+		"   " +
+		"  |" +
+		"  |"
+	numberTwo = "" +
+		" _ " +
+		" _|" +
+		"|_ "
+	numberThree = "" +
+		" _ " +
+		" _|" +
+		" _|"
 )
 
 func ParseNumbers(s string) [][]int {
@@ -37,9 +48,16 @@ func parseLine(entry string) []int {
 	entryLines := strings.Split(entry, "\n")
 	index := 0
 	for i := 0; i < 9; i++ {
-		number := entryLines[0][index:index+2] + entryLines[1][index:index+2] + entryLines[2][index:index+2]
+		number := entryLines[0][index:index+3] + entryLines[1][index:index+3] + entryLines[2][index:index+3]
 		if number == numberOne {
 			result[i] = 1
+		}
+
+		if number == numberTwo {
+			result[i] = 2
+		}
+		if number == numberThree {
+			result[i] = 3
 		}
 		index += 3
 	}
