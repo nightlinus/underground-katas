@@ -94,3 +94,7 @@ func parseDigit(entry string) []string {
 func CheckSumFor(account [9]int) bool {
 	return true
 }
+
+func CalculateCheckSum(account [9]int) int {
+	return 1
+}

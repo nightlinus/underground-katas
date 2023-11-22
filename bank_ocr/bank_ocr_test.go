@@ -142,3 +142,9 @@ func Test_zero_account_number_is_valid(t *testing.T) {
 
 	assert.Equal(t, true, isValid)
 }
+
+func Test_calculate_checksum_for_non_zero_first_position(t *testing.T) {
+	checkSum := bank_ocr.CalculateCheckSum([9]int{0, 0, 0, 0, 0, 0, 0, 0, 1})
+
+	assert.Equal(t, 1, checkSum)
+}
