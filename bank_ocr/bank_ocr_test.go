@@ -136,3 +136,9 @@ func Test_parse_lines_with_all_numbers(t *testing.T) {
 	assert.Equalf(t, expected, result,
 		`ParseNumbers() want = %v, got = %v`, expected, result)
 }
+
+func Test_zero_account_number_is_valid(t *testing.T) {
+	isValid := bank_ocr.CheckSumFor([9]int{})
+
+	assert.Equal(t, true, isValid)
+}
