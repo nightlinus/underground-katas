@@ -58,8 +58,7 @@ func Test_recognize_with_diff_lines(t *testing.T) {
 }
 
 func Test_parse_line_with_mixed_symbols(t *testing.T) {
-	lines :=
-		`   _  _  _  _  _  _  _  _  
+	lines := `   _  _  _  _  _  _  _  _  
   | _| _| _| _| _| _| _| _|
   | |_ |_ |_ |_ |_ |_ |_ |_ 
 
@@ -177,4 +176,22 @@ func Test_calculate_all_zero_values(t *testing.T) {
 	checkSum := bank_ocr.CalculateCheckSum([9]int{0, 0, 0, 0, 0, 0, 0, 0, 0})
 
 	assert.Equal(t, 0, checkSum)
+}
+
+func Test_calculate_d1_coefficient_value_2(t *testing.T) {
+	checkSum := bank_ocr.CalculateCheckSum([9]int{0, 0, 0, 0, 0, 0, 0, 0, 2})
+
+	assert.Equal(t, 2, checkSum)
+}
+
+func Test_calculate_d1_d9_coefficient_value_1(t *testing.T) {
+	checkSum := bank_ocr.CalculateCheckSum([9]int{1, 0, 0, 0, 0, 0, 0, 0, 1})
+
+	assert.Equal(t, 10, checkSum)
+}
+
+func Test_calculate_d1_d9_coefficient_value_2(t *testing.T) {
+	checkSum := bank_ocr.CalculateCheckSum([9]int{2, 0, 0, 0, 0, 0, 0, 0, 2})
+
+	assert.Equal(t, 20, checkSum)
 }
