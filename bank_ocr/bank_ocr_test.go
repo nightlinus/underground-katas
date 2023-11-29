@@ -219,3 +219,9 @@ func Test_calculate_d1_d7_coefficient_different_values_v2(t *testing.T) {
 
 	assert.Equal(t, 8, checkSum)
 }
+
+func Test_calculate_all_coefficient_has_values(t *testing.T) {
+	checkSum := bank_ocr.CalculateCheckSum([9]int{1, 1, 1, 1, 1, 1, 1, 1, 1})
+
+	assert.Equal(t, 45, checkSum)
+}

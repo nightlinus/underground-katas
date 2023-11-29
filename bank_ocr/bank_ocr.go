@@ -96,23 +96,11 @@ func CheckSumFor(account [9]int) bool {
 }
 
 func CalculateCheckSum(account [9]int) int {
-	if account[2] != 0 && account[8] != 0 {
-		return account[2]*7 + account[8]
-	}
-
-	if account[1] != 0 && account[8] != 0 {
-		return account[1]*8 + account[8]
-	}
-
-	if account[0] != 0 && account[8] != 0 {
-		return account[0]*9 + account[8]
-	}
+	acc := 0
 
 	for i := 0; i < 9; i++ {
-		if account[i] != 0 {
-			return (9 - i) * account[i]
-		}
+		acc += (9 - i) * account[i]
 	}
 
-	return 0
+	return acc
 }
