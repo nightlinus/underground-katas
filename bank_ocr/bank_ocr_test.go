@@ -160,3 +160,9 @@ func Test_calculate_d3_coefficient(t *testing.T) {
 
 	assert.Equal(t, 3, checkSum)
 }
+
+func Test_calculate_d9_coefficient(t *testing.T) {
+	checkSum := bank_ocr.CalculateCheckSum([9]int{1, 0, 0, 0, 0, 0, 0, 0, 0})
+
+	assert.Equal(t, 9, checkSum)
+}
