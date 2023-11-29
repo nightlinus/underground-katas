@@ -96,5 +96,13 @@ func CheckSumFor(account [9]int) bool {
 }
 
 func CalculateCheckSum(account [9]int) int {
+	if account[7] != 0 {
+		return 2
+	}
+
+	if account[6] != 0 {
+		return 3
+	}
+
 	return 1
 }

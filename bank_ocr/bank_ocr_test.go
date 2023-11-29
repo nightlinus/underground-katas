@@ -148,3 +148,15 @@ func Test_calculate_checksum_for_non_zero_first_position(t *testing.T) {
 
 	assert.Equal(t, 1, checkSum)
 }
+
+func Test_calculate_d2_coefficient(t *testing.T) {
+	checkSum := bank_ocr.CalculateCheckSum([9]int{0, 0, 0, 0, 0, 0, 0, 1, 0})
+
+	assert.Equal(t, 2, checkSum)
+}
+
+func Test_calculate_d3_coefficient(t *testing.T) {
+	checkSum := bank_ocr.CalculateCheckSum([9]int{0, 0, 0, 0, 0, 0, 1, 0, 0})
+
+	assert.Equal(t, 3, checkSum)
+}
