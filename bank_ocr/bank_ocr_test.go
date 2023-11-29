@@ -195,3 +195,27 @@ func Test_calculate_d1_d9_coefficient_value_2(t *testing.T) {
 
 	assert.Equal(t, 20, checkSum)
 }
+
+func Test_calculate_d1_d9_coefficient_different_values(t *testing.T) {
+	checkSum := bank_ocr.CalculateCheckSum([9]int{1, 0, 0, 0, 0, 0, 0, 0, 2})
+
+	assert.Equal(t, 11, checkSum)
+}
+
+func Test_calculate_d1_d9_coefficient_different_values_v2(t *testing.T) {
+	checkSum := bank_ocr.CalculateCheckSum([9]int{9, 0, 0, 0, 0, 0, 0, 0, 9})
+
+	assert.Equal(t, 90, checkSum)
+}
+
+func Test_calculate_d1_d8_coefficient_different_values_v2(t *testing.T) {
+	checkSum := bank_ocr.CalculateCheckSum([9]int{0, 1, 0, 0, 0, 0, 0, 0, 1})
+
+	assert.Equal(t, 9, checkSum)
+}
+
+func Test_calculate_d1_d7_coefficient_different_values_v2(t *testing.T) {
+	checkSum := bank_ocr.CalculateCheckSum([9]int{0, 0, 1, 0, 0, 0, 0, 0, 1})
+
+	assert.Equal(t, 8, checkSum)
+}
