@@ -172,3 +172,9 @@ func Test_calculate_d9_coefficient_value_2(t *testing.T) {
 
 	assert.Equal(t, 18, checkSum)
 }
+
+func Test_calculate_all_zero_values(t *testing.T) {
+	checkSum := bank_ocr.CalculateCheckSum([9]int{0, 0, 0, 0, 0, 0, 0, 0, 0})
+
+	assert.Equal(t, 0, checkSum)
+}

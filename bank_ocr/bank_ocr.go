@@ -102,5 +102,5 @@ func CalculateCheckSum(account [9]int) int {
 		}
 	}
 
-	return 1
+	return 0
 }
