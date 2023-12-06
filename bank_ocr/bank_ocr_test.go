@@ -225,3 +225,27 @@ func Test_calculate_all_coefficient_has_values(t *testing.T) {
 
 	assert.Equal(t, 45, checkSum)
 }
+
+func Test_digits_from_zero_to_eight(t *testing.T) {
+	assert.NotPanics(t, func() {
+		bank_ocr.MustAccount(0, 1, 2, 3, 4, 5, 6, 7, 8)
+	})
+}
+
+func Test_digits_from_one_to_nine(t *testing.T) {
+	assert.NotPanics(t, func() {
+		bank_ocr.MustAccount(1, 2, 3, 4, 5, 6, 7, 8, 9)
+	})
+}
+
+func Test_digits_not_allowed_account_digit_10(t *testing.T) {
+	assert.Panics(t, func() {
+		bank_ocr.MustAccount(1, 2, 3, 4, 5, 6, 7, 8, 10)
+	})
+}
+
+func Test_not_allowed_account_with_more_than_9_digits(t *testing.T) {
+	assert.Panics(t, func() {
+		bank_ocr.MustAccount(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+	})
+}
