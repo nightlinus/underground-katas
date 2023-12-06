@@ -98,28 +98,31 @@ func CheckSumFor(account [9]int) bool {
 	return true
 }
 
-type Account [9]int
+type digit int
+type Account [9]digit
 
-func NewAccount(numbers ...int) (Account, error) {
+func MustAccount(numbers ...int) Account {
 	if len(numbers) > 9 {
-		return Account{}, fmt.Errorf("numbers must be less than 9")
+		panic("numbers must be less than 9")
 	}
+
 	var account Account
 	for i, n := range numbers {
-		if n >= 0 && n <= 9 {
-			return Account{}, fmt.Errorf("given digit %v value out of range [0,9] in position %v", n, i)
+		if n < 0 || n > 9 {
+			panic(fmt.Sprintf("given digit %v value out of range [0,9] in position %v", n, i))
 		}
-		account[i] = n
+
+		account[i] = digit(n)
 	}
 
-	return account, nil
+	return account
 }
 
 func CalculateCheckSum(account Account) int {
 	acc := 0
 
 	for i := 0; i < 9; i++ {
-		acc += (9 - i) * account[i]
+		acc += (9 - i) * int(account[i])
 	}
 
 	return acc

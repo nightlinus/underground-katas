@@ -143,85 +143,85 @@ func Test_zero_account_number_is_valid(t *testing.T) {
 }
 
 func Test_calculate_checksum_for_non_zero_first_position(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum([9]int{0, 0, 0, 0, 0, 0, 0, 0, 1})
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount(0, 0, 0, 0, 0, 0, 0, 0, 1))
 
 	assert.Equal(t, 1, checkSum)
 }
 
 func Test_calculate_d2_coefficient(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum([9]int{0, 0, 0, 0, 0, 0, 0, 1, 0})
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount(0, 0, 0, 0, 0, 0, 0, 1, 0))
 
 	assert.Equal(t, 2, checkSum)
 }
 
 func Test_calculate_d3_coefficient(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum([9]int{0, 0, 0, 0, 0, 0, 1, 0, 0})
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount(0, 0, 0, 0, 0, 0, 1, 0, 0))
 
 	assert.Equal(t, 3, checkSum)
 }
 
 func Test_calculate_d9_coefficient(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum([9]int{1, 0, 0, 0, 0, 0, 0, 0, 0})
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount(1, 0, 0, 0, 0, 0, 0, 0, 0))
 
 	assert.Equal(t, 9, checkSum)
 }
 
 func Test_calculate_d9_coefficient_value_2(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum([9]int{2, 0, 0, 0, 0, 0, 0, 0, 0})
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount(2, 0, 0, 0, 0, 0, 0, 0, 0))
 
 	assert.Equal(t, 18, checkSum)
 }
 
 func Test_calculate_all_zero_values(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum([9]int{0, 0, 0, 0, 0, 0, 0, 0, 0})
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount(0, 0, 0, 0, 0, 0, 0, 0, 0))
 
 	assert.Equal(t, 0, checkSum)
 }
 
 func Test_calculate_d1_coefficient_value_2(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum([9]int{0, 0, 0, 0, 0, 0, 0, 0, 2})
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount(0, 0, 0, 0, 0, 0, 0, 0, 2))
 
 	assert.Equal(t, 2, checkSum)
 }
 
 func Test_calculate_d1_d9_coefficient_value_1(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum([9]int{1, 0, 0, 0, 0, 0, 0, 0, 1})
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount(1, 0, 0, 0, 0, 0, 0, 0, 1))
 
 	assert.Equal(t, 10, checkSum)
 }
 
 func Test_calculate_d1_d9_coefficient_value_2(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum([9]int{2, 0, 0, 0, 0, 0, 0, 0, 2})
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount(2, 0, 0, 0, 0, 0, 0, 0, 2))
 
 	assert.Equal(t, 20, checkSum)
 }
 
 func Test_calculate_d1_d9_coefficient_different_values(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum([9]int{1, 0, 0, 0, 0, 0, 0, 0, 2})
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount(1, 0, 0, 0, 0, 0, 0, 0, 2))
 
 	assert.Equal(t, 11, checkSum)
 }
 
 func Test_calculate_d1_d9_coefficient_different_values_v2(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum([9]int{9, 0, 0, 0, 0, 0, 0, 0, 9})
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount(9, 0, 0, 0, 0, 0, 0, 0, 9))
 
 	assert.Equal(t, 90, checkSum)
 }
 
 func Test_calculate_d1_d8_coefficient_different_values_v2(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum([9]int{0, 1, 0, 0, 0, 0, 0, 0, 1})
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount(0, 1, 0, 0, 0, 0, 0, 0, 1))
 
 	assert.Equal(t, 9, checkSum)
 }
 
 func Test_calculate_d1_d7_coefficient_different_values_v2(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum([9]int{0, 0, 1, 0, 0, 0, 0, 0, 1})
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount(0, 0, 1, 0, 0, 0, 0, 0, 1))
 
 	assert.Equal(t, 8, checkSum)
 }
 
 func Test_calculate_all_coefficient_has_values(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum([9]int{1, 1, 1, 1, 1, 1, 1, 1, 1})
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount(1, 1, 1, 1, 1, 1, 1, 1, 1))
 
 	assert.Equal(t, 45, checkSum)
 }
