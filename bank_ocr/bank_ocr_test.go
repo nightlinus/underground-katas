@@ -225,15 +225,3 @@ func Test_calculate_all_coefficient_has_values(t *testing.T) {
 
 	assert.Equal(t, 45, checkSum)
 }
-
-func testTest(t *testing.T) {
-	type DigitAlias = int
-	type Digit int
-
-	var a DigitAlias = 1
-	var b Digit = 1
-	var c int = 1
-
-	a = c
-
-}
