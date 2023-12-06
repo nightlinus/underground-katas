@@ -1,6 +1,9 @@
 package bank_ocr
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 const (
 	numberOne = "" +
@@ -93,6 +96,23 @@ func parseDigit(entry string) []string {
 
 func CheckSumFor(account [9]int) bool {
 	return true
+}
+
+type Account [9]int
+
+func NewAccount(numbers ...int) (Account, error) {
+	if len(numbers) > 9 {
+		return Account{}, fmt.Errorf("numbers must be less than 9")
+	}
+	var account Account
+	for i, n := range numbers {
+		if n >= 0 && n <= 9 {
+			return Account{}, fmt.Errorf("given digit %v value out of range [0,9] in position %v", n, i)
+		}
+		account[i] = n
+	}
+
+	return account, nil
 }
 
 func CalculateCheckSum(account [9]int) int {
