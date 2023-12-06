@@ -17,10 +17,10 @@ func genNLines(n int) string {
 `, n)
 }
 
-func genNResults(n int) [][]int {
-	result := make([][]int, 0, n)
+func genNResults(n int) []bank_ocr.Account {
+	result := make([]bank_ocr.Account, 0, n)
 	for i := 0; i < n; i++ {
-		result = append(result, []int{1, 1, 1, 1, 1, 1, 1, 1, 1})
+		result = append(result, bank_ocr.MustAccount(1, 1, 1, 1, 1, 1, 1, 1, 1))
 	}
 
 	return result
@@ -84,7 +84,7 @@ func Test_recognize_full_lines(t *testing.T) {
 }
 
 func Test_recognize_diff_lines(t *testing.T) {
-	expected := [][]int{{2, 2, 2, 2, 2, 2, 2, 2, 2}}
+	expected := []bank_ocr.Account{bank_ocr.MustAccount(2, 2, 2, 2, 2, 2, 2, 2, 2)}
 
 	result := bank_ocr.ParseNumbers(
 		` _  _  _  _  _  _  _  _  _ 
@@ -105,7 +105,7 @@ func Test_parse_lines_with_1_and_2(t *testing.T) {
 
 `)
 
-	expected := [][]int{{1, 2, 2, 2, 2, 2, 2, 2, 2}}
+	expected := []bank_ocr.Account{bank_ocr.MustAccount(1, 2, 2, 2, 2, 2, 2, 2, 2)}
 	assert.Equalf(t, expected, result,
 		`ParseNumbers() want = %v, got = %v`, expected, result)
 }
@@ -118,7 +118,7 @@ func Test_parse_lines_with_1_2_3(t *testing.T) {
 
 `)
 
-	expected := [][]int{{1, 2, 3, 2, 2, 2, 2, 2, 2}}
+	expected := []bank_ocr.Account{bank_ocr.MustAccount(1, 2, 3, 2, 2, 2, 2, 2, 2)}
 	assert.Equalf(t, expected, result,
 		`ParseNumbers() want = %v, got = %v`, expected, result)
 }
@@ -131,13 +131,13 @@ func Test_parse_lines_with_all_numbers(t *testing.T) {
 
 `)
 
-	expected := [][]int{{1, 2, 3, 4, 5, 6, 7, 8, 9}}
+	expected := []bank_ocr.Account{bank_ocr.MustAccount(1, 2, 3, 4, 5, 6, 7, 8, 9)}
 	assert.Equalf(t, expected, result,
 		`ParseNumbers() want = %v, got = %v`, expected, result)
 }
 
 func Test_zero_account_number_is_valid(t *testing.T) {
-	isValid := bank_ocr.CheckSumFor([9]int{})
+	isValid := bank_ocr.CheckSumFor(bank_ocr.MustAccount())
 
 	assert.Equal(t, true, isValid)
 }

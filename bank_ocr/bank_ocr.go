@@ -56,48 +56,6 @@ var numbers = map[string]int{
 	numberNine:  9,
 }
 
-func ParseNumbers(s string) [][]int {
-	entries := ParseLines(s)
-	entriesCount := len(entries)
-	result := make([][]int, 0, entriesCount)
-
-	for _, entry := range entries {
-		result = append(result, parseLine(entry))
-	}
-
-	return result
-}
-
-func ParseLines(s string) []string {
-	entries := strings.Split(s, "\n\n")
-	return entries[:len(entries)-1]
-}
-
-func parseLine(entry string) []int {
-	result := make([]int, 9)
-	digits := parseDigit(entry)
-	for i, digit := range digits {
-		result[i] = numbers[digit]
-	}
-	return result
-}
-
-func parseDigit(entry string) []string {
-	result := make([]string, 9)
-	entryLines := strings.Split(entry, "\n")
-	index := 0
-	for i := 0; i < 9; i++ {
-		numberStr := entryLines[0][index:index+3] + entryLines[1][index:index+3] + entryLines[2][index:index+3]
-		result[i] = numberStr
-		index += 3
-	}
-	return result
-}
-
-func CheckSumFor(account [9]int) bool {
-	return true
-}
-
 type digit int
 type Account [9]digit
 
@@ -116,6 +74,50 @@ func MustAccount(numbers ...int) Account {
 	}
 
 	return account
+}
+
+func ParseNumbers(s string) []Account {
+	entries := ParseLines(s)
+	entriesCount := len(entries)
+	result := make([]Account, 0, entriesCount)
+
+	for _, entry := range entries {
+		result = append(result, parseLine(entry))
+	}
+
+	return result
+}
+
+func ParseLines(s string) []string {
+	entries := strings.Split(s, "\n\n")
+	return entries[:len(entries)-1]
+}
+
+func parseLine(entry string) Account {
+	result := make([]int, 9)
+
+	digits := parseDigit(entry)
+	for i, digit := range digits {
+		result[i] = numbers[digit]
+	}
+
+	return MustAccount(result...)
+}
+
+func parseDigit(entry string) []string {
+	result := make([]string, 9)
+	entryLines := strings.Split(entry, "\n")
+	index := 0
+	for i := 0; i < 9; i++ {
+		numberStr := entryLines[0][index:index+3] + entryLines[1][index:index+3] + entryLines[2][index:index+3]
+		result[i] = numberStr
+		index += 3
+	}
+	return result
+}
+
+func CheckSumFor(account Account) bool {
+	return true
 }
 
 func CalculateCheckSum(account Account) int {
