@@ -115,7 +115,7 @@ func NewAccount(numbers ...int) (Account, error) {
 	return account, nil
 }
 
-func CalculateCheckSum(account [9]int) int {
+func CalculateCheckSum(account Account) int {
 	acc := 0
 
 	for i := 0; i < 9; i++ {
