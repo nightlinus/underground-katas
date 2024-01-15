@@ -131,5 +131,5 @@ func CalculateCheckSum(account Account) int {
 }
 
 func CheckSumIsValid(account Account) bool {
-	return true
+	return CalculateCheckSum(account)%11 == 0
 }
