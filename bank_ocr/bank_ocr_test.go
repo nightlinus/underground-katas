@@ -253,3 +253,5 @@ func Test_check_sum_is_invalid(t *testing.T) {
 	acc := bank_ocr.MustAccount(3, 4, 5, 8, 8, 2, 8, 6, 3)
 	assert.False(t, bank_ocr.CheckSumIsValid(acc))
 }
+
+

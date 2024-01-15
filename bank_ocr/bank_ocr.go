@@ -2,6 +2,7 @@ package bank_ocr
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -56,7 +57,7 @@ var numbers = map[string]int{
 	numberNine:  9,
 }
 
-type digit int
+type digit string
 type Account [9]digit
 
 func MustAccount(numbers ...int) Account {
@@ -70,7 +71,8 @@ func MustAccount(numbers ...int) Account {
 			panic(fmt.Sprintf("given digit %v value out of range [0,9] in position %v", n, i))
 		}
 
-		account[i] = digit(n)
+        digitStr := strconv.FormatInt(int64(n), 10) 
+		account[i] = digit(digitStr)
 	}
 
 	return account
@@ -120,7 +122,9 @@ func CalculateCheckSum(account Account) int {
 	acc := 0
 
 	for i := 0; i < 9; i++ {
-		acc += (9 - i) * int(account[i])
+		digit, _ := strconv.ParseInt(string(account[i]), 10, 32)
+
+		acc += (9 - i) * int(digit)
 	}
 
 	return acc
