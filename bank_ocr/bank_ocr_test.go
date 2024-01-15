@@ -136,12 +136,6 @@ func Test_parse_lines_with_all_numbers(t *testing.T) {
 		`ParseNumbers() want = %v, got = %v`, expected, result)
 }
 
-func Test_zero_account_number_is_valid(t *testing.T) {
-	isValid := bank_ocr.CheckSumFor(bank_ocr.MustAccount())
-
-	assert.Equal(t, true, isValid)
-}
-
 func Test_calculate_checksum_for_non_zero_first_position(t *testing.T) {
 	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount(0, 0, 0, 0, 0, 0, 0, 0, 1))
 

@@ -116,10 +116,6 @@ func parseDigit(entry string) []string {
 	return result
 }
 
-func CheckSumFor(account Account) bool {
-	return true
-}
-
 func CalculateCheckSum(account Account) int {
 	acc := 0
 
