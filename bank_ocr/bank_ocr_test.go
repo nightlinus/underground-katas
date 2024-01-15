@@ -249,3 +249,8 @@ func Test_not_allowed_account_with_more_than_9_digits(t *testing.T) {
 		bank_ocr.MustAccount(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 	})
 }
+
+func Test_check_sum_is_valid(t *testing.T) {
+	acc := bank_ocr.MustAccount(3, 4, 5, 8, 8, 2, 8, 6, 5)
+	assert.True(t, bank_ocr.CheckSumIsValid(acc))
+}

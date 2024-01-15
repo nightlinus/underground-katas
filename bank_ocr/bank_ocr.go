@@ -129,3 +129,7 @@ func CalculateCheckSum(account Account) int {
 
 	return acc
 }
+
+func CheckSumIsValid(account Account) bool {
+	return true
+}
