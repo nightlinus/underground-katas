@@ -58,7 +58,16 @@ var numbers = map[string]int{
 }
 
 type digit string
-type Account [9]digit
+type Account struct {
+	Value [9]digit
+}
+
+func (a Account) Validate() string {
+	if !a.CheckSumIsValid() {
+		return "ERR"
+	}
+	return ""
+}
 
 func MustAccount(numbers ...int) Account {
 	if len(numbers) > 9 {
@@ -68,11 +77,11 @@ func MustAccount(numbers ...int) Account {
 	var account Account
 	for i, n := range numbers {
 		if n < 0 || n > 9 {
-			panic(fmt.Sprintf("given digit %v value out of range [0,9] in position %v", n, i))
+			panic(fmt.Sprintf("given digit %v Value out of range [0,9] in position %v", n, i))
 		}
 
-        digitStr := strconv.FormatInt(int64(n), 10) 
-		account[i] = digit(digitStr)
+		digitStr := strconv.FormatInt(int64(n), 10)
+		account.Value[i] = digit(digitStr)
 	}
 
 	return account
@@ -122,7 +131,7 @@ func CalculateCheckSum(account Account) int {
 	acc := 0
 
 	for i := 0; i < 9; i++ {
-		digit, _ := strconv.ParseInt(string(account[i]), 10, 32)
+		digit, _ := strconv.ParseInt(string(account.Value[i]), 10, 32)
 
 		acc += (9 - i) * int(digit)
 	}
@@ -130,6 +139,6 @@ func CalculateCheckSum(account Account) int {
 	return acc
 }
 
-func CheckSumIsValid(account Account) bool {
-	return CalculateCheckSum(account)%11 == 0
+func (a Account) CheckSumIsValid() bool {
+	return CalculateCheckSum(a)%11 == 0
 }

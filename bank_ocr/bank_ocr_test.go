@@ -64,7 +64,7 @@ func Test_parse_line_with_mixed_symbols(t *testing.T) {
 
 `
 	result := bank_ocr.ParseNumbers(lines)
-	assert.Len(t, result[0], 9)
+	assert.Len(t, result[0].Value, 9)
 }
 
 func Test_recognize_full_line(t *testing.T) {
@@ -246,12 +246,20 @@ func Test_not_allowed_account_with_more_than_9_digits(t *testing.T) {
 
 func Test_check_sum_is_valid(t *testing.T) {
 	acc := bank_ocr.MustAccount(3, 4, 5, 8, 8, 2, 8, 6, 5)
-	assert.True(t, bank_ocr.CheckSumIsValid(acc))
+	assert.True(t, bank_ocr.Account.CheckSumIsValid(acc))
 }
 
 func Test_check_sum_is_invalid(t *testing.T) {
 	acc := bank_ocr.MustAccount(3, 4, 5, 8, 8, 2, 8, 6, 3)
-	assert.False(t, bank_ocr.CheckSumIsValid(acc))
+	assert.False(t, bank_ocr.Account.CheckSumIsValid(acc))
 }
 
+func Test_Account_isValid(t *testing.T) {
+	account := bank_ocr.MustAccount(1, 2, 3, 4, 5, 6, 7, 8, 9)
+	assert.Equal(t, "", account.Validate())
+}
 
+func Test_Account_check_sum_is_invalid(t *testing.T) {
+	acc := bank_ocr.MustAccount(3, 4, 5, 8, 8, 2, 8, 6, 3)
+	assert.Equal(t, "ERR", acc.Validate())
+}
