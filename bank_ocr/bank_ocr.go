@@ -69,19 +69,22 @@ func (a Account) Validate() string {
 	return ""
 }
 
-func MustAccount(numbers ...int) Account {
+func MustAccount(numbers ...digit) Account {
 	if len(numbers) > 9 {
 		panic("numbers must be less than 9")
 	}
 
 	var account Account
 	for i, n := range numbers {
-		if n < 0 || n > 9 {
+		number, err := strconv.Atoi(string(n))
+		if err != nil {
+			panic(fmt.Sprintf("given digit %v Value out of range [0,9] in position %v", n, i))
+		}
+		if number < 0 || number > 9 {
 			panic(fmt.Sprintf("given digit %v Value out of range [0,9] in position %v", n, i))
 		}
 
-		digitStr := strconv.FormatInt(int64(n), 10)
-		account.Value[i] = digit(digitStr)
+		account.Value[i] = n
 	}
 
 	return account
@@ -105,11 +108,11 @@ func ParseLines(s string) []string {
 }
 
 func parseLine(entry string) Account {
-	result := make([]int, 9)
+	result := make([]digit, 9)
 
 	digits := parseDigit(entry)
-	for i, digit := range digits {
-		result[i] = numbers[digit]
+	for i, d := range digits {
+		result[i] = digit(strconv.Itoa(numbers[d]))
 	}
 
 	return MustAccount(result...)
