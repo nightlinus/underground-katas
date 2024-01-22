@@ -84,7 +84,7 @@ func Test_recognize_full_lines(t *testing.T) {
 }
 
 func Test_recognize_diff_lines(t *testing.T) {
-	expected := []bank_ocr.Account{bank_ocr.MustAccount("2", "2", "2", "2", "2", "2", "2", 2, 2)}
+	expected := []bank_ocr.Account{bank_ocr.MustAccount("2", "2", "2", "2", "2", "2", "2", "2", "2")}
 
 	result := bank_ocr.ParseNumbers(
 		` _  _  _  _  _  _  _  _  _ 
@@ -131,25 +131,25 @@ func Test_parse_lines_with_all_numbers(t *testing.T) {
 
 `)
 
-	expected := []bank_ocr.Account{bank_ocr.MustAccount(1, 2, 3, 4, 5, 6, 7, 8, 9)}
+	expected := []bank_ocr.Account{bank_ocr.MustAccount("1", "2", "3", "4", "5", "6", "7", "8", "9")}
 	assert.Equalf(t, expected, result,
 		`ParseNumbers() want = %v, got = %v`, expected, result)
 }
 
 func Test_calculate_checksum_for_non_zero_first_position(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount("0", "0", "0", "0", "0", "0", "0", "0", 1))
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount("0", "0", "0", "0", "0", "0", "0", "0", "1"))
 
 	assert.Equal(t, 1, checkSum)
 }
 
 func Test_calculate_d2_coefficient(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount("0", "0", "0", "0", "0", "0", "0", 1, "0"))
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount("0", "0", "0", "0", "0", "0", "0", "1", "0"))
 
 	assert.Equal(t, 2, checkSum)
 }
 
 func Test_calculate_d3_coefficient(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount("0", "0", "0", "0", "0", "0", 1, "0", "0"))
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount("0", "0", "0", "0", "0", "0", "1", "0", "0"))
 
 	assert.Equal(t, 3, checkSum)
 }
@@ -173,19 +173,19 @@ func Test_calculate_all_zero_values(t *testing.T) {
 }
 
 func Test_calculate_d1_coefficient_value_2(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount("0", "0", "0", "0", "0", "0", "0", "0", 2))
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount("0", "0", "0", "0", "0", "0", "0", "0", "2"))
 
 	assert.Equal(t, 2, checkSum)
 }
 
 func Test_calculate_d1_d9_coefficient_value_1(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount("1", "0", "0", "0", "0", "0", "0", "0", 1))
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount("1", "0", "0", "0", "0", "0", "0", "0", "1"))
 
 	assert.Equal(t, 10, checkSum)
 }
 
 func Test_calculate_d1_d9_coefficient_value_2(t *testing.T) {
-	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount("2", "0", "0", "0", "0", "0", "0", "0", 2))
+	checkSum := bank_ocr.CalculateCheckSum(bank_ocr.MustAccount("2", "0", "0", "0", "0", "0", "0", "0", "2"))
 
 	assert.Equal(t, 20, checkSum)
 }
@@ -232,32 +232,32 @@ func Test_digits_from_one_to_nine(t *testing.T) {
 
 func Test_digits_not_allowed_account_digit_10(t *testing.T) {
 	assert.Panics(t, func() {
-		bank_ocr.MustAccount(1, 2, 3, 4, 5, 6, 7, 8, 10)
+		bank_ocr.MustAccount("1", "2", "3", "4", "5", "6", "7", "8", "10")
 	})
 }
 
 func Test_not_allowed_account_with_more_than_9_digits(t *testing.T) {
 	assert.Panics(t, func() {
-		bank_ocr.MustAccount(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+		bank_ocr.MustAccount("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
 	})
 }
 
 func Test_check_sum_is_valid(t *testing.T) {
-	acc := bank_ocr.MustAccount(3, 4, 5, 8, 8, 2, 8, 6, 5)
+	acc := bank_ocr.MustAccount("3", "4", "5", "8", "8", "2", "8", "6", "5")
 	assert.True(t, bank_ocr.Account.CheckSumIsValid(acc))
 }
 
 func Test_check_sum_is_invalid(t *testing.T) {
-	acc := bank_ocr.MustAccount(3, 4, 5, 8, 8, 2, 8, 6, 3)
+	acc := bank_ocr.MustAccount("3", "4", "5", "8", "8", "2", "8", "6", "3")
 	assert.False(t, bank_ocr.Account.CheckSumIsValid(acc))
 }
 
 func Test_Account_isValid(t *testing.T) {
-	account := bank_ocr.MustAccount(1, 2, 3, 4, 5, 6, 7, 8, 9)
+	account := bank_ocr.MustAccount("1", "2", "3", "4", "5", "6", "7", "8", "9")
 	assert.Equal(t, "", account.Validate())
 }
 
 func Test_Account_check_sum_is_invalid(t *testing.T) {
-	acc := bank_ocr.MustAccount(3, 4, 5, 8, 8, 2, 8, 6, 3)
+	acc := bank_ocr.MustAccount("3", "4", "5", "8", "8", "2", "8", "6", "3")
 	assert.Equal(t, "ERR", acc.Validate())
 }
