@@ -112,7 +112,12 @@ func parseLine(entry string) Account {
 
 	digits := parseDigit(entry)
 	for i, d := range digits {
-		result[i] = digit(strconv.Itoa(numbers[d]))
+		n, ok := numbers[d]
+		if !ok {
+			result[i] = "?"
+			continue
+		}
+		result[i] = digit(strconv.Itoa(n))
 	}
 
 	return MustAccount(result...)

@@ -57,6 +57,19 @@ func Test_recognize_with_diff_lines(t *testing.T) {
 	assert.Len(t, result, 1)
 }
 
+func Test_recognize_with_illegal_number(t *testing.T) {
+	lines := `_  _  _  *  _  _  _  _  _  
+ _| _| _| _| _| _| _| _| _|
+|_ |_ |_ |_ |_ |_ |_ |_ |_ 
+
+`
+	result := bank_ocr.ParseNumbers(lines)
+	assert.Len(t, result, 1)
+	account := result[0]
+
+	assert.Equal(t, account, bank_ocr.MustAccount("2", "2", "2", "?", "2", "2", "2", "2", "2"))
+}
+
 func Test_parse_line_with_mixed_symbols(t *testing.T) {
 	lines := `   _  _  _  _  _  _  _  _  
   | _| _| _| _| _| _| _| _|
