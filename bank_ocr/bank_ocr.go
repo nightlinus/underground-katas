@@ -76,6 +76,11 @@ func MustAccount(numbers ...digit) Account {
 
 	var account Account
 	for i, n := range numbers {
+		if n == "?" {
+			account.Value[i] = "?"
+			continue
+		}
+
 		number, err := strconv.Atoi(string(n))
 		if err != nil {
 			panic(fmt.Sprintf("given digit %v Value out of range [0,9] in position %v", n, i))
@@ -112,12 +117,7 @@ func parseLine(entry string) Account {
 
 	digits := parseDigit(entry)
 	for i, d := range digits {
-		n, ok := numbers[d]
-		if !ok {
-			result[i] = "?"
-			continue
-		}
-		result[i] = digit(strconv.Itoa(n))
+		result[i] = digit(strconv.Itoa(numbers[d]))
 	}
 
 	return MustAccount(result...)
