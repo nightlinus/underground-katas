@@ -3,10 +3,9 @@ package bank_ocr_test
 import (
 	"strings"
 	"testing"
+	"underground-katas/bank_ocr"
 
 	"github.com/stretchr/testify/assert"
-
-	"underground-katas/bank_ocr"
 )
 
 func genNLines(n int) string {
@@ -48,7 +47,7 @@ func Test_recognize_500_line(t *testing.T) {
 }
 
 func Test_recognize_with_diff_lines(t *testing.T) {
-	lines := `_  _  _  _  _  _  _  _  _  
+	lines := ` _  _  _  _  _  _  _  _  _  
  _| _| _| _| _| _| _| _| _|
 |_ |_ |_ |_ |_ |_ |_ |_ |_ 
 
@@ -62,7 +61,7 @@ func Test_MustAccount_can_be_created_with_question_mark(t *testing.T) {
 }
 
 func Test_recognize_with_illegal_number(t *testing.T) {
-	lines := `_  _  _  _  _  _  _  _  _  
+	lines := ` _  _  _  *  _  _  _  _  _ 
  _| _| _| _| _| _| _| _| _|
 |_ |_ |_ |_ |_ |_ |_ |_ |_ 
 
