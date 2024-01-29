@@ -287,7 +287,5 @@ func Test_Account_is_illegal(t *testing.T) {
 func Test_parsed_accounts_output_format(t *testing.T) {
 	out := bank_ocr.OutputFormat(genNLines(3))
 	assert.Equal(t,
-		`111111111
-	111111111
-	111111111`, out)
+		"111111111\n111111111\n111111111\n", out)
 }

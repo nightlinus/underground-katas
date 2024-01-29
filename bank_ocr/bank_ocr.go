@@ -182,3 +182,14 @@ func CalculateCheckSum(account Account) int {
 func (a Account) CheckSumIsValid() bool {
 	return CalculateCheckSum(a)%11 == 0
 }
+
+func OutputFormat(in string) string {
+	accounts := ParseNumbers(in)
+	result := strings.Builder{}
+	for _, account := range accounts {
+		result.WriteString(account.String())
+		result.WriteString("\n")
+	}
+
+	return result.String()
+}
