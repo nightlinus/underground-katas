@@ -72,15 +72,25 @@ func (a Account) String() string {
 }
 
 func (a Account) Validate() string {
-	for _, d := range a.Value {
-		if d == "?" {
-			return "ILL"
-		}
+	if a.checkValueIsIllegal() {
+		return "ILL"
 	}
+
 	if !a.CheckSumIsValid() {
 		return "ERR"
 	}
+
 	return ""
+}
+
+func (a Account) checkValueIsIllegal() bool {
+	for _, d := range a.Value {
+		if d == "?" {
+			return true
+		}
+	}
+
+	return false
 }
 
 func MustAccount(numbers ...digit) Account {

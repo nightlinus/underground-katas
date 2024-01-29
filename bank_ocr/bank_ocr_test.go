@@ -3,6 +3,7 @@ package bank_ocr_test
 import (
 	"strings"
 	"testing"
+
 	"underground-katas/bank_ocr"
 
 	"github.com/stretchr/testify/assert"
@@ -281,4 +282,12 @@ func Test_Account_check_sum_is_invalid(t *testing.T) {
 func Test_Account_is_illegal(t *testing.T) {
 	acc := bank_ocr.MustAccount("3", "4", "?", "8", "8", "2", "8", "6", "3")
 	assert.Equal(t, "ILL", acc.Validate())
+}
+
+func Test_parsed_accounts_output_format(t *testing.T) {
+	out := bank_ocr.OutputFormat(genNLines(3))
+	assert.Equal(t,
+		`111111111
+	111111111
+	111111111`, out)
 }
