@@ -72,8 +72,10 @@ func (a Account) String() string {
 }
 
 func (a Account) Validate() string {
-	if strings.Contains(a.String(), "?") {
-		return "ILL"
+	for _, d := range a.Value {
+		if d == "?" {
+			return "ILL"
+		}
 	}
 	if !a.CheckSumIsValid() {
 		return "ERR"
