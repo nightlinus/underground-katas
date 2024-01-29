@@ -277,3 +277,8 @@ func Test_Account_check_sum_is_invalid(t *testing.T) {
 	acc := bank_ocr.MustAccount("3", "4", "5", "8", "8", "2", "8", "6", "3")
 	assert.Equal(t, "ERR", acc.Validate())
 }
+
+func Test_Account_is_illegal(t *testing.T) {
+	acc := bank_ocr.MustAccount("3", "4", "?", "8", "8", "2", "8", "6", "3")
+	assert.Equal(t, "ILL", acc.Validate())
+}
