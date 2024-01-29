@@ -126,10 +126,18 @@ func parseLine(entry string) Account {
 
 	digits := parseDigit(entry)
 	for i, d := range digits {
-		result[i] = digit(strconv.Itoa(numbers[d]))
+		result[i] = findDigit(d)
 	}
 
 	return MustAccount(result...)
+}
+
+func findDigit(d string) digit {
+	r, ok := numbers[d]
+	if !ok {
+		return digit("?")
+	}
+	return digit(strconv.Itoa(r))
 }
 
 func parseDigit(entry string) []string {
