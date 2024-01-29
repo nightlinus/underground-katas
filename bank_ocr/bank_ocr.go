@@ -62,6 +62,15 @@ type Account struct {
 	Value [9]digit
 }
 
+func (a Account) String() string {
+	result := strings.Builder{}
+	for _, v := range a.Value {
+		result.WriteString(string(v))
+	}
+
+	return result.String()
+}
+
 func (a Account) Validate() string {
 	if !a.CheckSumIsValid() {
 		return "ERR"

@@ -58,13 +58,12 @@ func Test_recognize_with_diff_lines(t *testing.T) {
 }
 
 func Test_MustAccount_can_be_created_with_question_mark(t *testing.T) {
-	assert.EqualValues(t, [9]string{"1", "2", "3", "?", "4", "5", "6", "7", "8"}, bank_ocr.MustAccount("1", "2", "3", "?", "4", "5", "6", "7", "8").Value)
+	assert.Equal(t, "123?45678", bank_ocr.MustAccount("1", "2", "3", "?", "4", "5", "6", "7", "8").String())
 }
 
-/*
 func Test_recognize_with_illegal_number(t *testing.T) {
 	lines := `_  _  _  *  _  _  _  _  _
- _| _| _| _| _| _| _| _| _|
+_| _| _| _| _| _| _| _| _|
 |_ |_ |_ |_ |_ |_ |_ |_ |_
 
 `
@@ -72,9 +71,8 @@ func Test_recognize_with_illegal_number(t *testing.T) {
 	assert.Len(t, result, 1)
 	account := result[0]
 
-	assert.Equal(t, bank_ocr.MustAccount("2", "2", "2", "?", "2", "2", "2", "2", "2"), account)
+	assert.Equal(t, bank_ocr.MustAccount("2", "2", "2", "?", "2", "2", "2", "2", "2").String(), account.String())
 }
-*/
 
 func Test_parse_line_with_mixed_symbols(t *testing.T) {
 	lines := `   _  _  _  _  _  _  _  _  
