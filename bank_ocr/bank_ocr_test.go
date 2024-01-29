@@ -62,9 +62,9 @@ func Test_MustAccount_can_be_created_with_question_mark(t *testing.T) {
 }
 
 func Test_recognize_with_illegal_number(t *testing.T) {
-	lines := `_  _  _  *  _  _  _  _  _
-_| _| _| _| _| _| _| _| _|
-|_ |_ |_ |_ |_ |_ |_ |_ |_
+	lines := `_  _  _  _  _  _  _  _  _  
+ _| _| _| _| _| _| _| _| _|
+|_ |_ |_ |_ |_ |_ |_ |_ |_ 
 
 `
 	result := bank_ocr.ParseNumbers(lines)
