@@ -3,7 +3,6 @@ package bank_ocr_test
 import (
 	"strings"
 	"testing"
-
 	"underground-katas/bank_ocr"
 
 	"github.com/stretchr/testify/assert"
@@ -288,4 +287,22 @@ func Test_parsed_accounts_output_format(t *testing.T) {
 	out := bank_ocr.OutputFormat(genNLines(3))
 	assert.Equal(t,
 		"111111111\n111111111\n111111111\n", out)
+}
+
+func Test_parsed_accounts_output_format_with_ill(t *testing.T) {
+	out := bank_ocr.OutputFormat(`                           
+  |  |  |  |  |  |  |  |  |
+  |  |  |  |  |  |  |  |  |
+
+                           
+  |  |  |  |  |  |  |     |
+  |  |  |  |  |  |  |  |  |
+
+                           
+  |  |  |  |  |  |  |  |  |
+  |  |  |  |  |  |  |  |  |
+
+`)
+	assert.Equal(t,
+		"111111111\n1111111?1 ILL\n111111111\n", out)
 }

@@ -57,10 +57,12 @@ var numbers = map[string]int{
 	numberNine:  9,
 }
 
-type digit string
-type Account struct {
-	Value [9]digit
-}
+type (
+	digit   string
+	Account struct {
+		Value [9]digit
+	}
+)
 
 func (a Account) String() string {
 	result := strings.Builder{}
@@ -188,6 +190,9 @@ func OutputFormat(in string) string {
 	result := strings.Builder{}
 	for _, account := range accounts {
 		result.WriteString(account.String())
+		if status := account.Validate(); status != "" {
+			result.WriteString(fmt.Sprintf(" %v", status))
+		}
 		result.WriteString("\n")
 	}
 
