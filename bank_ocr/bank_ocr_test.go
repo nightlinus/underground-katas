@@ -308,7 +308,7 @@ func Test_parsed_accounts_output_format_with_ill(t *testing.T) {
 }
 
 func Test_parsed_accounts_output_format_with_ill_input_len(t *testing.T) {
-	out := bank_ocr.OutputFormat(`                           
+	out := bank_ocr.OutputFormat(`                          
   |  |  |  |  |  |  |  |  |
   |  |  |  |  |  |  |  |  |
 

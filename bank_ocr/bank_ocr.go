@@ -161,8 +161,19 @@ func parseDigit(entry string) []string {
 	result := make([]string, 9)
 	entryLines := strings.Split(entry, "\n")
 	index := 0
+
+	r1 := len(entryLines[0])
+	r2 := len(entryLines[1])
+	r3 := len(entryLines[2])
+
 	for i := 0; i < 9; i++ {
-		numberStr := entryLines[0][index:index+3] + entryLines[1][index:index+3] + entryLines[2][index:index+3]
+		var (
+			bound0 = min(r1, index+3)
+			bound1 = min(r2, index+3)
+			bound2 = min(r3, index+3)
+		)
+
+		numberStr := entryLines[0][index:bound0] + entryLines[1][index:bound1] + entryLines[2][index:bound2]
 		result[i] = numberStr
 		index += 3
 	}
