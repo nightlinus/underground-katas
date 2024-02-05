@@ -332,3 +332,27 @@ func Test_parsed_accounts_output_format_with_partially_incomplete_lines(t *testi
 `)
 	assert.Equal(t, "1???????? ILL\n", out)
 }
+
+func Test_parsed_accounts_output_format_with_invalid_checksum(t *testing.T) {
+	in := genNLines(1)
+	out := bank_ocr.OutputFormat(in)
+	assert.Equal(t, "111111111 ERR\n", out)
+}
+
+func Test_parsed_accounts_output_format_with_different_inputs(t *testing.T) {
+	in := `    _  _     _  _  _  _  _ 
+  | _| _||_||_ |_   ||_||_|
+  ||_  _|  | _||_|  ||_| _|
+
+                            
+  |  |  |  |  |  |  |     |
+  |  |  |  |  |  |  |  |  |
+
+                           
+  |  |  |  |  |  |  |  |  |
+  |  |  |  |  |  |  |  |  |
+
+`
+	out := bank_ocr.OutputFormat(in)
+	assert.Equal(t, "123456789\n1111111?1 ILL\n111111111 ERR\n", out)
+}
