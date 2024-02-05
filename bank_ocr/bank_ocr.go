@@ -170,19 +170,9 @@ func parseDigit(entry string) []string {
 		return result
 	}
 
-	var r0, r1, r2 int
-
-	if len(entryLines) > 0 {
-		r0 = len(entryLines[0])
-	}
-
-	if len(entryLines) > 1 {
-		r1 = len(entryLines[1])
-	}
-
-	if len(entryLines) > 2 {
-		r2 = len(entryLines[2])
-	}
+	r0 := len(entryLines[0])
+	r1 := len(entryLines[1])
+	r2 := len(entryLines[2])
 
 	for i := 0; i < 9; i++ {
 		var (
@@ -190,9 +180,12 @@ func parseDigit(entry string) []string {
 			bound0     = min(r0, rightBound)
 			bound1     = min(r1, rightBound)
 			bound2     = min(r2, rightBound)
+			leftBound0 = min(index, bound0)
+			leftBound1 = min(index, bound1)
+			leftBound2 = min(index, bound2)
 		)
 
-		numberStr := entryLines[0][index:bound0] + entryLines[1][index:bound1] + entryLines[2][index:bound2]
+		numberStr := entryLines[0][leftBound0:bound0] + entryLines[1][leftBound1:bound1] + entryLines[2][leftBound2:bound2]
 		result[i] = numberStr
 		index += 3
 	}

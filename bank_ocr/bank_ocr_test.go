@@ -29,7 +29,7 @@ func genNResults(n int) []bank_ocr.Account {
 func Test_read_empty_account_numbers_list(t *testing.T) {
 	result := bank_ocr.ParseNumbers(``)
 
-	assert.Len(t, result, 0)
+	assert.Len(t, result, 1)
 }
 
 func Test_recognize_first_line(t *testing.T) {
@@ -322,4 +322,13 @@ func Test_parsed_accounts_output_format_with_incomplete_lines(t *testing.T) {
   |  |  |  |  |  |  |  |  |
 `)
 	assert.Equal(t, "????????? ILL\n", out)
+}
+
+func Test_parsed_accounts_output_format_with_partially_incomplete_lines(t *testing.T) {
+	out := bank_ocr.OutputFormat(`                          
+  |  |  |  |  |  |  |  |  |
+  |
+
+`)
+	assert.Equal(t, "1???????? ILL\n", out)
 }
