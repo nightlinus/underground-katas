@@ -135,6 +135,10 @@ func ParseNumbers(s string) []Account {
 
 func ParseLines(s string) []string {
 	entries := strings.Split(s, "\n\n")
+	if len(entries) == 1 {
+		return entries
+	}
+
 	return entries[:len(entries)-1]
 }
 
@@ -162,15 +166,30 @@ func parseDigit(entry string) []string {
 	entryLines := strings.Split(entry, "\n")
 	index := 0
 
-	r1 := len(entryLines[0])
-	r2 := len(entryLines[1])
-	r3 := len(entryLines[2])
+	if len(entryLines) != 3 {
+		return result
+	}
+
+	var r0, r1, r2 int
+
+	if len(entryLines) > 0 {
+		r0 = len(entryLines[0])
+	}
+
+	if len(entryLines) > 1 {
+		r1 = len(entryLines[1])
+	}
+
+	if len(entryLines) > 2 {
+		r2 = len(entryLines[2])
+	}
 
 	for i := 0; i < 9; i++ {
 		var (
-			bound0 = min(r1, index+3)
-			bound1 = min(r2, index+3)
-			bound2 = min(r3, index+3)
+			rightBound = index + 3
+			bound0     = min(r0, rightBound)
+			bound1     = min(r1, rightBound)
+			bound2     = min(r2, rightBound)
 		)
 
 		numberStr := entryLines[0][index:bound0] + entryLines[1][index:bound1] + entryLines[2][index:bound2]

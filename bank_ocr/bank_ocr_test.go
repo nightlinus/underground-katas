@@ -3,6 +3,7 @@ package bank_ocr_test
 import (
 	"strings"
 	"testing"
+
 	"underground-katas/bank_ocr"
 
 	"github.com/stretchr/testify/assert"
@@ -314,4 +315,11 @@ func Test_parsed_accounts_output_format_with_ill_input_len(t *testing.T) {
 
 `)
 	assert.Equal(t, "11111111? ILL\n", out)
+}
+
+func Test_parsed_accounts_output_format_with_incomplete_lines(t *testing.T) {
+	out := bank_ocr.OutputFormat(`                          
+  |  |  |  |  |  |  |  |  |
+`)
+	assert.Equal(t, "????????? ILL\n", out)
 }
