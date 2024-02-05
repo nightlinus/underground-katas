@@ -284,28 +284,34 @@ func Test_Account_is_illegal(t *testing.T) {
 }
 
 func Test_parsed_accounts_output_format(t *testing.T) {
-	out := bank_ocr.OutputFormat(genNLines(3))
+	in := `    _  _     _  _  _  _  _ 
+  | _| _||_||_ |_   ||_||_|
+  ||_  _|  | _||_|  ||_| _|
+
+`
+	out := bank_ocr.OutputFormat(in)
 	assert.Equal(t,
-		"111111111\n111111111\n111111111\n", out)
+		"123456789\n", out)
 }
 
 // TODO:
-//  1. Изменить тестовые данные
-//     2.(opt) Добавить генераторы для валидных номеров
+//
+//	2.(opt) Добавить генераторы для валидных номеров
 func Test_parsed_accounts_output_format_with_ill(t *testing.T) {
-	out := bank_ocr.OutputFormat(`                           
-  |  |  |  |  |  |  |  |  |
-  |  |  |  |  |  |  |  |  |
-
-                           
+	out := bank_ocr.OutputFormat(`                            
   |  |  |  |  |  |  |     |
-  |  |  |  |  |  |  |  |  |
-
-                           
-  |  |  |  |  |  |  |  |  |
   |  |  |  |  |  |  |  |  |
 
 `)
 	assert.Equal(t,
-		"111111111\n1111111?1 ILL\n111111111\n", out)
+		"1111111?1 ILL\n", out)
+}
+
+func Test_parsed_accounts_output_format_with_ill_input_len(t *testing.T) {
+	out := bank_ocr.OutputFormat(`                           
+  |  |  |  |  |  |  |  |  |
+  |  |  |  |  |  |  |  |  |
+
+`)
+	assert.Equal(t, "11111111? ILL\n", out)
 }
