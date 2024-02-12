@@ -19,3 +19,10 @@ departure date
 And the Room struct contain only
 
 room name
+
+
+TODO:
+ - Тест на вторую границу (должны ли включать или исключать границу при поиске?)
+ - refactoring from, to -> value object
+ - refactoring FreeRooms
+ - refactoring Registry

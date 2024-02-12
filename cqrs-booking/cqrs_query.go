@@ -8,8 +8,8 @@ type ReadRegistry struct {
 }
 
 type BookedRoom struct {
-	name     RoomName
-	bookedAt time.Time
+	Name     RoomName
+	BookedAt time.Time
 }
 
 type RoomName string
@@ -25,8 +25,24 @@ func NewQueryService(registry ReadRegistry) *QueryService {
 }
 
 func (q QueryService) FreeRooms(from time.Time, to time.Time) []RoomName {
-	if from == time.Date(2024, 2, 12, 0, 0, 0, 0, time.Local) && to == time.Date(2024, 2, 13, 0, 0, 0, 0, time.Local) {
-		return q.registry.Rooms[:1]
+	freeRooms := make(map[RoomName]bool)
+	for _, name := range q.registry.Rooms {
+		freeRooms[name] = true
 	}
-	return q.registry.Rooms
+
+	for _, room := range q.registry.BookedRooms {
+		if from == room.BookedAt {
+			freeRooms[room.Name] = false
+		}
+	}
+
+	result := make([]RoomName, 0)
+	for room, available := range freeRooms {
+		if available {
+			result = append(result, room)
+		}
+
+	}
+
+	return result
 }

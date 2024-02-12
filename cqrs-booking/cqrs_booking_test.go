@@ -26,7 +26,10 @@ func Test_free_room_available(t *testing.T) {
 
 func Test_free_room_check_with_date(t *testing.T) {
 	registry := cqrs_booking.ReadRegistry{
-		Rooms: []cqrs_booking.RoomName{"room1", "room2", "room3", "room4"},
+		Rooms: []cqrs_booking.RoomName{"room1", "room2"},
+		BookedRooms: []cqrs_booking.BookedRoom{
+			{Name: "room2", BookedAt: day(2024, 2, 12)},
+		},
 	}
 	arrival := day(2024, 2, 12)
 	departure := day(2024, 2, 13)
