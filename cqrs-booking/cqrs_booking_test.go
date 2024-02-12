@@ -23,3 +23,16 @@ func Test_free_room_available(t *testing.T) {
 
 	assert.Equal(t, registry.Rooms, roomsFree)
 }
+
+func Test_free_room_check_with_date(t *testing.T) {
+	registry := cqrs_booking.ReadRegistry{
+		Rooms: []cqrs_booking.RoomName{"room1", "room2", "room3", "room4"},
+	}
+	arrival, _ := time.Parse(time.DateOnly, "2024-02-12")
+	departure, _ := time.Parse(time.DateOnly, "2024-02-13")
+	query := cqrs_booking.NewQueryService(registry)
+
+	roomsFree := query.FreeRooms(arrival, departure)
+
+	assert.Equal(t, []cqrs_booking.RoomName{"room1"}, roomsFree)
+}
