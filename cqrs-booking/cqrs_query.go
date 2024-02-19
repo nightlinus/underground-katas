@@ -2,6 +2,19 @@ package cqrs_booking
 
 import "time"
 
+type BookingPeriod struct {
+	from time.Time
+	to   time.Time
+}
+
+func NewPeriod(from time.Time, to time.Time) (BookingPeriod, error) {
+
+	return BookingPeriod{
+		from: from,
+		to:   to,
+	}, nil
+}
+
 type ReadRegistry struct {
 	BookedRooms []BookedRoom
 	Rooms       []RoomName
@@ -24,13 +37,13 @@ func NewQueryService(registry ReadRegistry) *QueryService {
 	}
 }
 
-func (q QueryService) FreeRooms(from time.Time, to time.Time) []RoomName {
+func (q QueryService) FreeRooms(period BookingPeriod) []RoomName {
 	freeRooms := make(map[RoomName]bool)
 	for _, name := range q.registry.Rooms {
 		freeRooms[name] = true
 	}
 
-	for day := from; to.After(day); day = day.AddDate(0, 0, 1) {
+	for day := period.from; period.to.After(day); day = day.AddDate(0, 0, 1) {
 		for _, room := range q.registry.BookedRooms {
 			if day == room.BookedAt {
 				freeRooms[room.Name] = false
