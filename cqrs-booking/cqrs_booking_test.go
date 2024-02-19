@@ -40,6 +40,22 @@ func Test_free_room_check_with_date(t *testing.T) {
 	assert.Equal(t, []cqrs_booking.RoomName{"room1"}, roomsFree)
 }
 
+func Test_no_free_room_when_room_booked_in_middle(t *testing.T) {
+	registry := cqrs_booking.ReadRegistry{
+		Rooms: []cqrs_booking.RoomName{"room1"},
+		BookedRooms: []cqrs_booking.BookedRoom{
+			{Name: "room1", BookedAt: day(2024, 2, 12)},
+		},
+	}
+	arrival := day(2024, 2, 11)
+	departure := day(2024, 2, 13)
+	query := cqrs_booking.NewQueryService(registry)
+
+	roomsFree := query.FreeRooms(arrival, departure)
+
+	assert.Empty(t, roomsFree)
+}
+
 func day(year, month, day int) time.Time {
 	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.Local)
 }
