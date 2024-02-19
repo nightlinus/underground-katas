@@ -35,7 +35,23 @@ type BookedRoom struct {
 	BookedAt time.Time
 }
 
-type RoomName string
+type (
+	RoomName      string
+	RoomOccupancy map[RoomName]bool
+)
+
+func CreateFreeRooms(roomNames []RoomName) RoomOccupancy {
+	freeRooms := make(RoomOccupancy)
+	for _, name := range roomNames {
+		freeRooms[name] = true
+	}
+
+	return freeRooms
+}
+
+func (r *RoomOccupancy) MarkOccupied(roomName RoomName) {
+	(*r)[roomName] = false
+}
 
 type QueryService struct {
 	registry ReadRegistry
@@ -47,26 +63,25 @@ func NewQueryService(registry ReadRegistry) *QueryService {
 	}
 }
 
-func (q QueryService) FreeRooms(period BookingPeriod) []RoomName {
-	freeRooms := make(map[RoomName]bool)
-	for _, name := range q.registry.Rooms {
-		freeRooms[name] = true
-	}
-
-	for day := period.from; period.to.After(day); day = day.AddDate(0, 0, 1) {
-		for _, room := range q.registry.BookedRooms {
-			if day == room.BookedAt {
-				freeRooms[room.Name] = false
-			}
-		}
-	}
-
+func (r *RoomOccupancy) GetFreeRooms() []RoomName {
 	result := make([]RoomName, 0)
-	for room, available := range freeRooms {
+	for room, available := range *r {
 		if available {
 			result = append(result, room)
 		}
 	}
-
 	return result
+}
+
+func (q QueryService) FreeRooms(period BookingPeriod) []RoomName {
+	freeRooms := CreateFreeRooms(q.registry.Rooms)
+	for day := period.from; period.to.After(day); day = day.AddDate(0, 0, 1) {
+		for _, room := range q.registry.BookedRooms {
+			if day == room.BookedAt {
+				freeRooms.MarkOccupied(room.Name)
+			}
+		}
+	}
+
+	return freeRooms.GetFreeRooms()
 }
