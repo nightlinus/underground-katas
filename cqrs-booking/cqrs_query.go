@@ -30,9 +30,11 @@ func (q QueryService) FreeRooms(from time.Time, to time.Time) []RoomName {
 		freeRooms[name] = true
 	}
 
-	for _, room := range q.registry.BookedRooms {
-		if from == room.BookedAt {
-			freeRooms[room.Name] = false
+	for day := from; to.After(day); day = day.AddDate(0, 0, 1) {
+		for _, room := range q.registry.BookedRooms {
+			if day == room.BookedAt {
+				freeRooms[room.Name] = false
+			}
 		}
 	}
 
@@ -41,7 +43,6 @@ func (q QueryService) FreeRooms(from time.Time, to time.Time) []RoomName {
 		if available {
 			result = append(result, room)
 		}
-
 	}
 
 	return result
