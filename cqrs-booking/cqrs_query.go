@@ -1,6 +1,9 @@
 package cqrs_booking
 
-import "time"
+import (
+	"errors"
+	"time"
+)
 
 type BookingPeriod struct {
 	from time.Time
@@ -8,6 +11,13 @@ type BookingPeriod struct {
 }
 
 func NewPeriod(from time.Time, to time.Time) (BookingPeriod, error) {
+	if from.After(to) {
+		return BookingPeriod{}, errors.New(`invalid period`)
+	}
+
+	if from.Truncate(time.Hour*24) == to.Truncate(time.Hour*24) {
+		return BookingPeriod{}, errors.New(`invalid period`)
+	}
 
 	return BookingPeriod{
 		from: from,

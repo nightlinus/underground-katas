@@ -23,7 +23,7 @@ room name
 
 TODO:
  - Тест на вторую границу (должны ли включать или исключать границу при поиске?)
- -  
+ - Резервирование в прошлом - полная хуйня (Миша)
  - refactoring from, to -> value object
  - refactoring FreeRooms
  - refactoring Registry
