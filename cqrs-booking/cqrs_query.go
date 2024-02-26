@@ -101,6 +101,9 @@ type BookCommand struct {
 	Period   BookingPeriod
 }
 
-func Book(command BookCommand) {
-
+func Book(command BookCommand, registry *ReadRegistry) {
+	registry.BookedRooms = append(registry.BookedRooms, BookedRoom{
+		Name:     command.Room,
+		BookedAt: command.Period.from,
+	})
 }
