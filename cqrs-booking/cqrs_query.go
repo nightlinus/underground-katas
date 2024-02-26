@@ -63,10 +63,10 @@ func (r *RoomOccupancy) MarkOccupied(roomName RoomName) {
 }
 
 type QueryService struct {
-	registry ReadRegistry
+	registry *ReadRegistry
 }
 
-func NewQueryService(registry ReadRegistry) *QueryService {
+func NewQueryService(registry *ReadRegistry) *QueryService {
 	return &QueryService{
 		registry: registry,
 	}
@@ -102,8 +102,10 @@ type BookCommand struct {
 }
 
 func Book(command BookCommand, registry *ReadRegistry) {
-	registry.BookedRooms = append(registry.BookedRooms, BookedRoom{
-		Name:     command.Room,
-		BookedAt: command.Period.from,
-	})
+	for _, day := range command.Period.AsRange() {
+		registry.BookedRooms = append(registry.BookedRooms, BookedRoom{
+			Name:     command.Room,
+			BookedAt: day,
+		})
+	}
 }

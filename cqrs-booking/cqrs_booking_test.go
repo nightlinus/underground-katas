@@ -10,7 +10,7 @@ import (
 )
 
 func Test_no_free_room_available(t *testing.T) {
-	query := cqrs_booking.NewQueryService(cqrs_booking.ReadRegistry{})
+	query := cqrs_booking.NewQueryService(&cqrs_booking.ReadRegistry{})
 
 	rooms := query.FreeRooms(period(time.Now().Add(-time.Hour*24), time.Now()))
 
@@ -19,7 +19,7 @@ func Test_no_free_room_available(t *testing.T) {
 
 func Test_free_room_available(t *testing.T) {
 	registry := cqrs_booking.ReadRegistry{Rooms: []cqrs_booking.RoomName{"room1"}}
-	query := cqrs_booking.NewQueryService(registry)
+	query := cqrs_booking.NewQueryService(&registry)
 	roomsFree := query.FreeRooms(period(time.Now().Add(-time.Hour*24), time.Now()))
 
 	assert.Equal(t, registry.Rooms, roomsFree)
@@ -34,7 +34,7 @@ func Test_free_room_check_with_date(t *testing.T) {
 	}
 	arrival := day(2024, 2, 12)
 	departure := day(2024, 2, 13)
-	query := cqrs_booking.NewQueryService(registry)
+	query := cqrs_booking.NewQueryService(&registry)
 
 	roomsFree := query.FreeRooms(period(arrival, departure))
 
@@ -50,7 +50,7 @@ func Test_no_free_room_when_room_booked_in_middle(t *testing.T) {
 	}
 	arrival := day(2024, 2, 11)
 	departure := day(2024, 2, 13)
-	query := cqrs_booking.NewQueryService(registry)
+	query := cqrs_booking.NewQueryService(&registry)
 
 	roomsFree := query.FreeRooms(period(arrival, departure))
 
@@ -66,7 +66,7 @@ func Test_free_room_when_booked_at_departure_date(t *testing.T) {
 	}
 	arrival := day(2024, 2, 11)
 	departure := day(2024, 2, 12)
-	query := cqrs_booking.NewQueryService(registry)
+	query := cqrs_booking.NewQueryService(&registry)
 
 	roomsFree := query.FreeRooms(period(arrival, departure))
 
@@ -82,7 +82,7 @@ func Test_room_is_booked_when_arrival_date_booked(t *testing.T) {
 	}
 	arrival := day(2024, 2, 12)
 	departure := day(2024, 2, 13)
-	query := cqrs_booking.NewQueryService(registry)
+	query := cqrs_booking.NewQueryService(&registry)
 
 	roomsFree := query.FreeRooms(period(arrival, departure))
 
@@ -105,11 +105,11 @@ func Test_invalid_booking_period_arrival_same_as_departure(t *testing.T) {
 	assert.Error(t, err)
 }
 
-func Test_can_execute_booking_command(t *testing.T) {
+func Test_booked_one_day(t *testing.T) {
 	registry := cqrs_booking.ReadRegistry{
 		Rooms: []cqrs_booking.RoomName{"room1"},
 	}
-	query := cqrs_booking.NewQueryService(registry)
+	query := cqrs_booking.NewQueryService(&registry)
 	cmd := cqrs_booking.BookCommand{
 		ClientID: 1,
 		Room:     cqrs_booking.RoomName("room1"),
@@ -119,6 +119,24 @@ func Test_can_execute_booking_command(t *testing.T) {
 	cqrs_booking.Book(cmd, &registry)
 
 	assert.Empty(t, query.FreeRooms(cmd.Period))
+}
+
+func Test_booked_period(t *testing.T) {
+	registry := cqrs_booking.ReadRegistry{
+		Rooms: []cqrs_booking.RoomName{"room1"},
+	}
+	query := cqrs_booking.NewQueryService(&registry)
+	cmd := cqrs_booking.BookCommand{
+		ClientID: 1,
+		Room:     cqrs_booking.RoomName("room1"),
+		Period:   period(day(2024, 2, 12), day(2024, 2, 15)),
+	}
+
+	cqrs_booking.Book(cmd, &registry)
+
+	assert.Empty(t, query.FreeRooms(period(day(2024, 2, 12), day(2024, 2, 13))))
+	assert.Empty(t, query.FreeRooms(period(day(2024, 2, 13), day(2024, 2, 14))))
+	assert.Empty(t, query.FreeRooms(period(day(2024, 2, 14), day(2024, 2, 15))))
 }
 
 func day(year, month, day int) time.Time {
