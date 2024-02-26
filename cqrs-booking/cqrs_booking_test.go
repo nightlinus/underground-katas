@@ -105,6 +105,16 @@ func Test_invalid_booking_period_arrival_same_as_departure(t *testing.T) {
 	assert.Error(t, err)
 }
 
+func Test_can_execute_booking_command(t *testing.T) {
+	cmd := cqrs_booking.BookCommand{
+		ClientID: 1,
+		Room:     cqrs_booking.RoomName("room1"),
+		Period:   period(day(2024, 2, 12), day(2024, 2, 13)),
+	}
+
+	cqrs_booking.Book(cmd)
+}
+
 func day(year, month, day int) time.Time {
 	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.Local)
 }

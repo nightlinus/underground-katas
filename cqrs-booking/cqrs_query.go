@@ -94,3 +94,13 @@ func (q QueryService) FreeRooms(period BookingPeriod) []RoomName {
 
 	return rooms.GetFreeRooms()
 }
+
+type BookCommand struct {
+	ClientID int
+	Room     RoomName
+	Period   BookingPeriod
+}
+
+func Book(command BookCommand) {
+
+}

@@ -25,7 +25,7 @@ TODO:
  - [x] Тест на вторую границу (должны ли включать или исключать границу при поиске?)
  - [ ] Резервирование в прошлом - полная хуйня (Миша)
  - [x] refactoring from, to -> value object
- - refactoring FreeRooms
- - refactoring Registry
+ - [x] refactoring FreeRooms
+ - [] refactoring Registry
  - [ ] Закончить рефакторинг FreeRooms
  - [ ] Продумать тест для нового типа RoomOccupancy
