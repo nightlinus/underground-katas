@@ -10,6 +10,15 @@ type BookingPeriod struct {
 	to   time.Time
 }
 
+func (bp BookingPeriod) AsRange() []time.Time {
+	result := make([]time.Time, 0)
+	for day := bp.from; bp.to.After(day); day = day.AddDate(0, 0, 1) {
+		result = append(result, day)
+	}
+
+	return result
+}
+
 func NewPeriod(from time.Time, to time.Time) (BookingPeriod, error) {
 	if from.After(to) {
 		return BookingPeriod{}, errors.New(`invalid period`)
@@ -74,14 +83,14 @@ func (r *RoomOccupancy) GetFreeRooms() []RoomName {
 }
 
 func (q QueryService) FreeRooms(period BookingPeriod) []RoomName {
-	freeRooms := CreateFreeRooms(q.registry.Rooms)
-	for day := period.from; period.to.After(day); day = day.AddDate(0, 0, 1) {
+	rooms := CreateFreeRooms(q.registry.Rooms)
+	for _, day := range period.AsRange() {
 		for _, room := range q.registry.BookedRooms {
 			if day == room.BookedAt {
-				freeRooms.MarkOccupied(room.Name)
+				rooms.MarkOccupied(room.Name)
 			}
 		}
 	}
 
-	return freeRooms.GetFreeRooms()
+	return rooms.GetFreeRooms()
 }
