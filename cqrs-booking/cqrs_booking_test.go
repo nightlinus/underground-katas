@@ -153,6 +153,18 @@ func Test_the_room_is_free_for_departure_date(t *testing.T) {
 	assert.NotEmpty(t, query.FreeRooms(period(day(2024, 2, 15), day(2024, 2, 16))))
 }
 
+func Test_WriteRegistryExists(t *testing.T) {
+	registry := cqrs_booking.WriteRegistryMock{}
+	cmd := cqrs_booking.BookCommand{
+		ClientID: 1,
+		Room:     cqrs_booking.RoomName("room1"),
+		Period:   period(day(2024, 2, 12), day(2024, 2, 15)),
+	}
+	cqrs_booking.BookIntoWriteRegistry(cmd, &registry)
+
+	assert.Equal(t, 1, registry.Called)
+}
+
 func day(year, month, day int) time.Time {
 	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.Local)
 }
@@ -169,7 +181,7 @@ func period(from time.Time, to time.Time) cqrs_booking.BookingPeriod {
 func assertRangeIsBooked(t *testing.T, query *cqrs_booking.QueryService, bookedPeriod cqrs_booking.BookingPeriod) {
 	t.Helper()
 
-	for _, day := range bookedPeriod.AsRange() {
-		assert.Empty(t, query.FreeRooms(period(day, day.Add(time.Hour*24))))
+	for _, d := range bookedPeriod.AsRange() {
+		assert.Empty(t, query.FreeRooms(period(d, d.Add(time.Hour*24))))
 	}
 }

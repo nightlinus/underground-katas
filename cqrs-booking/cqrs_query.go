@@ -49,6 +49,19 @@ type (
 	RoomOccupancy map[RoomName]bool
 )
 
+type WriteRegistryMock struct {
+	Called int
+}
+
+func (wr *WriteRegistryMock) Write(command BookCommand) error {
+	wr.Called++
+	return nil
+}
+
+type WriteRegistry interface {
+	Write(command BookCommand) error
+}
+
 func CreateFreeRooms(roomNames []RoomName) RoomOccupancy {
 	freeRooms := make(RoomOccupancy)
 	for _, name := range roomNames {
@@ -108,4 +121,8 @@ func Book(command BookCommand, registry *ReadRegistry) {
 			BookedAt: day,
 		})
 	}
+}
+
+func BookIntoWriteRegistry(command BookCommand, registry WriteRegistry) {
+	registry.Write(command)
 }
