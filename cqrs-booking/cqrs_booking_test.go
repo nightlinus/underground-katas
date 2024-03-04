@@ -134,9 +134,7 @@ func Test_booked_period(t *testing.T) {
 
 	cqrs_booking.Book(cmd, &registry)
 
-	assert.Empty(t, query.FreeRooms(period(day(2024, 2, 12), day(2024, 2, 13))))
-	assert.Empty(t, query.FreeRooms(period(day(2024, 2, 13), day(2024, 2, 14))))
-	assert.Empty(t, query.FreeRooms(period(day(2024, 2, 14), day(2024, 2, 15))))
+	assertRangeIsBooked(t, query, period(day(2024, 2, 12), day(2024, 2, 15)))
 }
 
 func day(year, month, day int) time.Time {
@@ -150,4 +148,12 @@ func period(from time.Time, to time.Time) cqrs_booking.BookingPeriod {
 	}
 
 	return p
+}
+
+func assertRangeIsBooked(t *testing.T, query *cqrs_booking.QueryService, bookedPeriod cqrs_booking.BookingPeriod) {
+	t.Helper()
+
+	for _, day := range bookedPeriod.AsRange() {
+		assert.Empty(t, query.FreeRooms(period(day, day.Add(time.Hour*24))))
+	}
 }
